@@ -1,81 +1,68 @@
-import axios from 'axios';
-import React, {useState, useEffect} from 'react';
-import ProductCardGroup from '../Product/ProductCardGroup';
-import App from '../../App';
-
-export default function Cart({handleChange, handleClick}) {
-  const [price, setPrice] = useState(0)
-  const [cart, setCart] = useState([]);
-
-  const handleDelete = (id) => {
-    const arr = cart.filter((product) => product.id !== id);
-    setCart(arr);
-    handlePrice();
-  }
-
-  const handlePrice = () => {
-    let ans = 0;
-    cart.map((product) => (ans += product.amount * product.price));
-    setPrice(ans);
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { delProduct } from '../../redux/action/index.js';
+import { NavLink } from 'react-router-dom';
+import { addProduct } from '../../redux/action/index.js';
+ 
+const Cart = () => {
+  const state = useSelector((state) => state.handleCart);
+  const dispatch = useDispatch();
+ 
+  const delCart = (product) => {
+    dispatch(delProduct(product));
   };
 
-  useEffect(() => {
-    handlePrice();
-  });
-
-//   useEffect(() => {
-//     async function fetchData() {
-//         try {
-//             const response = await axios.get("http://localhost:3009/api/cart", {
-//                 //request header set
-//                 headers:{
-//                     "Accept": "/",
-//                     "Content-type": "application/json",                    
-//                 }                
-//             })
-//             setCart(response.data)
-//             console.log(response.data)                
-//         } catch (error) {
-//             if(error.response) {
-//                 console.log(error.response.data)
-//             }
-//         }
-
-//     }
-//     fetchData();
-// }, [])
-
-let productElements = cart.map(product => { 
+  const increaseItem = (product) => {
+    dispatch(addProduct(product));
+  };
+ 
   return (
-        <div className='col-md-3' key={product.ProductId}>
-              <ProductCardGroup
-                  productName={product.ProductName}
-                  productImage={product.Image}
-                  productDescription={product.ProductDescription}
-                  price={product.Price}
-                  rating={product.Rating}
-                  size={product.Size}
-                  isFav={product.Is_Fav}
-                  product={product}
-                  handleClick={handleClick}
-              />
+    <>
+  <h1>I am Cart</h1>
+     <div>
+      {state.map((cartItem) => (
+        <div className='px-20 py-10' key={cartItem.CartId}>
+          <div className='flex justify-center relative  '>
+            <div className='absolute right-56 cursor-pointer'>
+              {/* <Icon icon='bi:x-lg' onClick={() => delCart(cartItem)} /> */}
+              {/* <i class="fa fa-trash" aria-hidden="true" onClick={() => delCart(cartItem)}></i> */}
+            </div>
+            <div className='w-2/12 mr-10'>
+              <img src={cartItem.Image} alt='cart' className='' />
+            </div>
+            <div className='ml-10 items-center'>
+              <h3 className='text-2xl font-semibold'>{cartItem.ProductName}</h3>
+              <div className='flex'>
+                <p className='text-xl font-bold mr-4'>Qty: {cartItem.Color}</p>
+                {console.log(cartItem.qty)}
+                <p className='text-xl font-bold'>${cartItem.Price}</p>
+              </div>
+ 
+              <div>
+                <button 
+                className='text-3xl mr-5'
+                onClick={() => delCart(cartItem)}
+                >-</button>
+                <button 
+                className='text-3xl'
+                onClick={() => increaseItem(cartItem)}
+                >+</button>
+              </div>
+            </div>
           </div>
-          )
-      }) 
-
-
-
-
-return (
-
-<section className='latest'>
-<div className='container'>
-  <div className='row'>         
-          {productElements}
-  </div>
-</div>
-</section>
-
-)
-}
-
+        </div>
+      ))}
+         <div className='px-20 text-center mx-auto'>
+          <NavLink
+            to='/cart'>
+            Proceed to checkout
+          </NavLink>
+        </div>
+ 
+      </div>
+    </>
+  );
+};
+ 
+export default Cart;

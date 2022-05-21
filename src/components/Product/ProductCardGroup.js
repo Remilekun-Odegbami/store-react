@@ -1,23 +1,29 @@
 import React, {useState} from 'react';
 import '../../App.css';
-import {useCart} from 'react-use-cart'
+import { useDispatch } from 'react-redux';
+import { addProduct } from '../../redux/action';
 
 export default function ProductCardGroup( props) {
-    // const {productName, productImage, price} = product;
     const [isFav, setIsFav] = useState('isNotFav');
 
     const custChoice = () => {
         console.log("clicked")
         setIsFav("isFav")
     } 
+
     
-    const {addToCart} = useCart(); 
+
+    const dispatch = useDispatch();
+
+    const addCart = (product) => {
+      dispatch(addProduct(product));
+    }
+    
   return (
     <section className="all-products">
         <div className="container">
             <div className="row">
                 <section className="new-products">
-                    {/* <h2 className="header text-center">New Products</h2> */}
                     <div className="row d-flex justify-content-between container">
                         <div className="card mt-5">
                             <img src={props.productImage} className="card-img-top mt-2" alt={props.productName} />
@@ -38,6 +44,7 @@ export default function ProductCardGroup( props) {
                                 </div>
                                 <div className="footer mt-3">
                                     <button type="submit" className="btn btn-success text-uppercase" >Add to Cart</button>
+                                    <button onClick={() => addCart()}>Add to cart</button>
                                     <i className="fa fa-heart-o mx-3" aria-hidden="true" onClick={custChoice}></i>
                                 </div>
                             </div>

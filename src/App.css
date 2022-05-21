@@ -56,8 +56,8 @@ header nav .cart span:nth-child(2) {
 }
 
 .main .welcome{
-  height: 60vh;
-  margin-top:5%;
+  height: 70vh;
+  margin-top:3%;
 }
 
 .main .welcome button {
@@ -301,8 +301,8 @@ header nav .cart span:nth-child(2) {
 
 .single-product{
   background: #EEEEEE;
-  height: 70vh;
-  padding: 30px;
+  height: 100vh;
+  padding: 50px 0;
 }
 
 .product-info .brief-info{

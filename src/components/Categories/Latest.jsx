@@ -1,39 +1,26 @@
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import ProductCardGroup from './ProductCardGroup';
-import { useSearchParams, Outlet } from 'react-router-dom';
-import QueryNavLink from '../../custom/QueryNavLink';
+import ProductCardGroup from '../Product/ProductCardGroup';
+import { useSearchParams, NavLink } from 'react-router-dom';
 
 
 export default function () {
     const [kulProducts, setKulProduct] = useState([]);
-    const [cart, setCart] = useState([]);
-    let [searchParams, setSearchParams] = useSearchParams()
-
-    const handleClick = (product, d) => {
-        cart.push(product)
-        console.log(cart)
-        if (cart.indexOf(product) !== -1) return;
-        setCart([...cart, product])
-    }
-   
-
+    
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get("http://localhost:3009/api/products", {
+                const response = await axios.get("http://localhost:3009/api/latest", {
                     //request header set
                     headers:{
                         "Accept": "/",
                         "Content-type": "application/json",                    
                     }                
                 })
-                setKulProduct(response.data)
-                // console.log(response.data)                
+                setKulProduct(response.data)               
             } catch (error) {
                 if(error.response) {
-                    // console.log(error.response.data)
-                    // console.log(kulProducts)
+                    console.log(error.response.data)
                 }
             }
 
@@ -41,22 +28,20 @@ export default function () {
         fetchData();
     }, [])
 
-
     const productElements = kulProducts.map(product => { 
         return (
-             <div className='col-md-3' key={product.ProductId}>
+             <NavLink to={`/products/${product.latestProductId}`} className='col-md-3' key={product.latestProductId}>
                     <ProductCardGroup
                         productName={product.ProductName}
                         productImage={product.Image}
-                        // productDescription={product.ProductDescription}
+                        productDescription={product.ProductDescription}
                         price={product.Price}
                         rating={product.Rating}
                         size={product.Size}
                         isFav={product.Is_Fav}
                         product={product}
-                        handleClick={handleClick}
                     />
-                </div>
+                </NavLink>
                 )
             }) 
   

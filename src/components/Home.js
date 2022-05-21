@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import NavBar from './NavBar';
 import welcome from '../Media/welcome.jpg';
 import Carousel, { CarouselItem } from './Carousel/Carousel1';
 import ProductCard from './Product/ProductCards';
