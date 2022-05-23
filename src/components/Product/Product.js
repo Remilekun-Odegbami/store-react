@@ -1,5 +1,5 @@
-import Slashed from '../Categories/Slashed';
-import Latest from '../Categories/Latest';
+import Slashed from '../categories/Slashed';
+import Latest from '../categories/Latest';
 
 
 export default function Product () {

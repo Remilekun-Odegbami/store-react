@@ -1,6 +1,7 @@
 
 // Products
-const ProductCard = ({productName, price, rating, size, productImage, isFav}) => {
+const ProductCard = ({productName, price, productImage}) => {
+
 
     return (
         
@@ -11,9 +12,10 @@ const ProductCard = ({productName, price, rating, size, productImage, isFav}) =>
                             <img src={productImage} className="card-img-top" alt={productName} />
                             <div className="card-body">
                                 <h5 className="card-title text-center">{productName}</h5>
-                                <p className="card-text">Price: ${price}</p>
-                                <div className="middle">
-                                <p className="card-text">New Price: ${price}</p>
+                                <p className="card-text text-danger">Old Price: ${price}</p>
+                                <p className="card-text text-success">New Price: ${(price - 1.5).toFixed(2)}</p>
+                                <div>
+                                    <button type="submit" className="btn btn-success text-uppercase" >More info</button>
                                 </div>
                             </div>
                         </div>

@@ -1,8 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import welcome from '../Media/welcome.jpg';
-import Carousel, { CarouselItem } from './Carousel/Carousel1';
-import ProductCard from './Product/ProductCards';
+import Carousel, { CarouselItem } from './carousel/Carousel1';
+import ProductCard from './product/ProductCards';
 import axios from 'axios';
+import { NavLink } from 'react-router-dom';
 
 
 export default function Home() {
@@ -27,6 +28,7 @@ export default function Home() {
         }
         fetchData();
     }, [])
+
   return (
     <section className='main'>
         <div className='welcome d-flex'>
@@ -66,22 +68,25 @@ export default function Home() {
             <div className='container'>
                 <div className='row'>
                     <Carousel>
-                        {
-                            kulProducts ? kulProducts.map(product => (
-                                <CarouselItem key={product.ProductId}>
-                                    <ProductCard
-                                        productName={product.ProductName}
-                                        productImage={product.Image}
-                                        productDescription={product.ProductDescription}
-                                        price={product.Price}
-                                        rating={product.Rating}
-                                        size={product.Size}
-                                        isFav={product.Is_Fav}
-                                    />
-                                </CarouselItem>
-                            )) : null
-                        }
-                    </Carousel>                    
+                            {
+                                kulProducts ? kulProducts.map(product => (
+                                    <NavLink to={`/products/${product.ProductId}`} className='col-md-3' key={product.ProductId}>
+                                        <CarouselItem key={product.ProductId}>
+                                            <ProductCard
+                                                productName={product.ProductName}
+                                                ProductId={product.ProductId}
+                                                productImage={product.Image}
+                                                productDescription={product.ProductDescription}
+                                                price={product.Price}
+                                                rating={product.Rating}
+                                                size={product.Size}
+                                                isFav={product.Is_Fav}
+                                            />
+                                        </CarouselItem>
+                                    </NavLink>                   
+                                )) : null
+                            }
+                        </Carousel> 
                 </div>
             </div>
         </section>

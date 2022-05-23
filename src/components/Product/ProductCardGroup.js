@@ -1,23 +1,7 @@
 import React, {useState} from 'react';
 import '../../App.css';
-import { useDispatch } from 'react-redux';
-import { addProduct } from '../../redux/action';
 
-export default function ProductCardGroup( props) {
-    const [isFav, setIsFav] = useState('isNotFav');
-
-    const custChoice = () => {
-        console.log("clicked")
-        setIsFav("isFav")
-    } 
-
-    
-
-    const dispatch = useDispatch();
-
-    const addCart = (product) => {
-      dispatch(addProduct(product));
-    }
+export default function ProductCardGroup( props) { 
     
   return (
     <section className="all-products">
@@ -28,8 +12,8 @@ export default function ProductCardGroup( props) {
                         <div className="card mt-5">
                             <img src={props.productImage} className="card-img-top mt-2" alt={props.productName} />
                             <div className="card-body">
-                                <h5 className="card-title">{props.productName}</h5>
-                                <p className="price">Price: ${props.price}</p>
+                                <h4 className="card-title">{props.productName}</h4>
+                                <h5 className="price my-3">Price: ${props.price}</h5>
                                 <div className="sizes">
                                     <button type="submit">XS</button>
                                     <button type="submit">S</button>
@@ -43,9 +27,7 @@ export default function ProductCardGroup( props) {
                                     <i className="fa fa-star-o" aria-hidden="true"></i>
                                 </div>
                                 <div className="footer mt-3">
-                                    <button type="submit" className="btn btn-success text-uppercase" >Add to Cart</button>
-                                    <button onClick={() => addCart()}>Add to cart</button>
-                                    <i className="fa fa-heart-o mx-3" aria-hidden="true" onClick={custChoice}></i>
+                                    <button type="submit" className="btn btn-success text-uppercase" >More info</button>
                                 </div>
                             </div>
                         </div>
